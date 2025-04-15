@@ -1,48 +1,46 @@
-const express  = require("express")
+const express = require("express");
+const bodyParser = require("body-parser");
 
-const app = express()
+const app = express();
+app.use(bodyParser.json());
 
-app.get("/test", function(req,res){
+// In-memory database
+const users = [];
+
+// Signup route
+app.post("/signup", (req, res) => {
+    const { username, password } = req.body;
+
+    // Check if the user already exists
+    const existingUser = users.find(user => user.username === username);
+    if (existingUser) {
+        return res.status(400).json({ message: "User already exists" });
+    }
+
+    // Add the new user to the in-memory database
+    users.push({ username, password });
+    res.status(201).json({ message: "User signed up successfully" });
+});
+
+// Login route
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+
+    // Check if the user exists and the password matches
+    const user = users.find(user => user.username === username && user.password === password);
+    if (!user) {
+        return res.status(401).json({ message: "Invalid username or password" });
+    }
+
+    res.status(200).json({ message: "Login successful" });
+});
+
+// Test route
+app.get("/test", (req, res) => {
     res.send("hi");
-})
+});
 
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-
-// map function
-// function f(a){
-//     return a*2;
-// }
-// arr = [1,2,3]
-
-// const ans = arr.map( (a) => {
-//     return a * 3;
-// })
-// console.log(ans)
-
-// filter method 
-
-// const arr = [1,2,3,4]
-// const ans = arr.filter((n) =>{
-//     if (n%2 == 0 ){
-//         return true;
-//     }else{
-//         return false;
-//     }
-// })
-// console.log(ans)
-
-// arr = [1,2,3,4,5]
-
-// arr.filter( (a) => { return a>2 })
-// (3) [3, 4, 5]
-// arr.map( (a) => { return a*2 })
-// (5) [2, 4, 6, 8, 10]
-
-// const mongoose = require("mongoose");
-
-// mongoose.connect("mongodb+srv://bhartiyaproudly:PXLVDcMCCmr1E95V@cluster0.a1f0w.mongodb.net/")
-
