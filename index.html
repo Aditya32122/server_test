@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+</head>
+<script>
+    const addTodo = () =>{
+        const title = document.getElementById("title").value;
+        const des = document.getElementById("des").value;
+        const outerDiv = document.createElement("div");
+        outerDiv.innerHTML = title;
+        document.getElementById("container").appendChild(outerDiv);
+     
+        
+
+    }
+</script>
+<body>
+    <input id="title" type="text"placeholder="title"><br>
+    <input id="des" placeholder="des"><br>
+    <button onclick="addTodo()">Add TODO</button>
+    <div id="container"></div>
+   
+</body>
+</html>
