@@ -2,7 +2,9 @@ const express  = require("express")
 
 const app = express()
 
-
+app.get("/test", function(req,res){
+    res.send("hi");
+})
 
 const PORT = 3000;
 app.listen(PORT, () => {
