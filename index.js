@@ -34,9 +34,17 @@ app.post("/login", (req, res) => {
         return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    // Create JWT token
-    const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" });
-
+    const token = jwt.sign(
+        {
+          sub: "test",         // This should match the Application Lookup condition
+          username: username,  // Your actual user data
+          aud: "local",        // Must match 'Audience' in JWT policy
+         
+        },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+      
     res.status(200).json({ message: "Login successful", access_token: token });
 });
 
