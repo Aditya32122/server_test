@@ -12,6 +12,22 @@ const users = [];
 // Secret key for signing JWTs (you should store this in a .env file)
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
+app.post('/uploadtest', (req, res) => {
+    // Extract the details
+    const headers = req.headers; // Request headers
+    const { fileName, filePath, fileSize } = req.body; // Request body
+    const query = req.query; // Query params
+
+    console.log("Headers:", headers);
+    console.log("Body:", { fileName, filePath, fileSize });
+    console.log("Query:", query);
+
+    // Simple response
+    res.json({
+        message: 'File info received successfully!',
+        data: { fileName, filePath, fileSize }
+    });
+});
 // Signup route
 app.post("/signup", (req, res) => {
     const { username, password } = req.body;
